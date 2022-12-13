@@ -7,13 +7,42 @@ import java.util.Arrays;
 public class TestCode {
     @Test
     public void testCode() {
-        System.out.println("test1 ::: binary_gap : " + binaryGap(8806));
+        System.out.println("#test1 ::: binary_gap : " + binaryGap(8806));
         System.out.println("#test2 ::: cyclic_rotation : "
                 + Arrays.toString(cyclicRotation(new int[]{1, 2, 3, 4}, 2)));
         System.out.println("#test3 ::: oddOccurrencesInArray : "
                 + oddOccurrencesInArray(new int[]{9, 3, 9, 3, 9, 7, 9}));
         System.out.println("#test4 ::: frogJump : " + frogJump(10, 85, 30));
         System.out.println("#test5 ::: permMissingElem : " + permMissingElem(new int[]{2, 3, 1, 5}));
+        System.out.println("#test6 :::. 기사단원 무기 : " + orderWeapon(10, 3, 2));
+
+    }
+
+    //test6: orderWeapon
+    public int orderWeapon(int number, int limit, int power) {
+        int answer = 0;
+
+        for (int i = 1; i <= number; i++) {
+            int result = getCount(i);
+            if (result > limit) {
+                answer += power;
+            } else {
+                answer += result;
+            }
+        }
+        return answer;
+    }
+    private int getCount(int number) {
+        int count = 0;
+        for (int i = 1; i * i <= number; i++) {
+            if (number % i == 0) {
+                count++;
+                if (i * i < number) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
 
