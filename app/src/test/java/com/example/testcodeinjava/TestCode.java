@@ -2,7 +2,9 @@ package com.example.testcodeinjava;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 public class TestCode {
     @Test
@@ -16,7 +18,91 @@ public class TestCode {
         System.out.println("#test5 ::: permMissingElem : " + permMissingElem(new int[]{2, 3, 1, 5}));
         System.out.println("#test6 ::: 기사단원 무기 : " + orderWeapon(10, 3, 2));
         System.out.println("#test7 ::: 과일장수 : " + fruitSeller(3, 4, new int[]{1, 2, 3, 1, 2, 3, 1, 1}));
+        System.out.println("#test8 ::: 모의고사 : " + Arrays.toString(exam(new int[]{1, 2, 3, 4, 5, 4, 3, 2, 1})));
+        System.out.println("#test9 ::: 소수 찾기 : " + findPrimeNumber("17"));
 
+    }
+
+    // test9 소수 찾기
+    public int findPrimeNumber(String numbers) {
+        int answer = 0;
+        int count = 0;
+
+        // set에 모든 수를 넣기 위한 정의
+        HashSet<Integer> set = new HashSet<>();
+
+        permutation("", numbers, set);
+
+        //iterator : 저장되어잇는 요소를 읽어오는 방법 ,
+        while (set.iterator().hasNext()) { // 다음 읽어올 요소가 있으면 true, 없으면 false
+            int ele = set.iterator().next(); // 다음요소를 가져온다.
+            set.remove(ele);
+            if (ele == 2) {
+                count++;
+            }
+            if (ele % 2 != 0 && isPrime(ele)) {
+                count++;
+            }
+        }
+        return count;
+    }
+    public boolean isPrime(int ele) {
+        // 소수가 맞는지 확인
+        if (ele == 0 || ele == 1) {
+            return false;
+        }
+        for (int i = 3; i <= (int) Math.sqrt(ele); i += 2) {
+            if (ele % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //순열 (재귀함수 사용)
+    public void permutation(String prefix, String numbers, HashSet<Integer> set) {
+        int length = numbers.length();
+
+        for (int i = 0; i < numbers.length(); i++) {
+            permutation(prefix + numbers.charAt(i), numbers.substring(0, i) + numbers.substring(i + 1, length), set);
+        }
+        if (!prefix.equals("")) {
+            set.add(Integer.valueOf(prefix));
+        }
+        for (int i = 0; i < length; i++) {
+            permutation(prefix + numbers.charAt(i), numbers.substring(0, i) + numbers.substring(i + 1, length), set);
+        }
+
+    }
+
+    // test8 : 모의고사
+    public int[] exam(int[] answers) {
+        int[] answer = {};
+        int[] person1 = {1, 2, 3, 4, 5};
+        int[] person2 = {2, 1, 2, 3, 2, 4, 2, 5};
+        int[] person3 = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+
+        int answer1 = 0;
+        int answer2 = 0;
+        int answer3 = 0;
+        // 몫 , 나머지
+        for (int i = 0; i < answers.length; i++) {
+            if (answers[i] == person1[i % person1.length]) answer1++;
+            if (answers[i] == person2[i % person2.length]) answer2++;
+            if (answers[i] == person3[i % person3.length]) answer3++;
+        }
+        int max = Math.max(Math.max(answer1, answer2), answer3);
+
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        if (max == answer1) list.add(1);
+        if (max == answer2) list.add(2);
+        if (max == answer3) list.add(3);
+
+//        answer = new int[list.size()];
+//        for (int i = 0; i < answers.length; i++) {
+//            answer[i] = list.get(i);
+//        }
+        return list.stream().mapToInt(Integer::intValue).toArray();
     }
 
     // test7 : fruitSeller
