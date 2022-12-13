@@ -12,8 +12,15 @@ public class TestCode {
                 + Arrays.toString(cyclicRotation(new int[]{1, 2, 3, 4}, 2)));
         System.out.println("#test3 ::: oddOccurrencesInArray : "
                 + oddOccurrencesInArray(new int[]{9, 3, 9, 3, 9, 7, 9}));
+        System.out.println("#test4 ::: frogJump : " + frogJump(10, 85, 30));
     }
 
+    // test4: frogJump
+    public int frogJump(int X, int Y, int D) {
+        int destination = Y - X;
+        int jumps = destination % D > 0 ? destination / D + 1 : destination / D;
+        return jumps;
+    }
 
     // test3: oddOccurrencesInArray
     public int oddOccurrencesInArray(int[] A) {
