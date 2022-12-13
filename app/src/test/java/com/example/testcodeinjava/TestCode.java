@@ -14,11 +14,62 @@ public class TestCode {
                 + oddOccurrencesInArray(new int[]{9, 3, 9, 3, 9, 7, 9}));
         System.out.println("#test4 ::: frogJump : " + frogJump(10, 85, 30));
         System.out.println("#test5 ::: permMissingElem : " + permMissingElem(new int[]{2, 3, 1, 5}));
-        System.out.println("#test6 :::. 기사단원 무기 : " + orderWeapon(10, 3, 2));
+        System.out.println("#test6 ::: 기사단원 무기 : " + orderWeapon(10, 3, 2));
+        System.out.println("#test7 ::: 과일장수 : " + fruitSeller(3, 4, new int[]{1, 2, 3, 1, 2, 3, 1, 1}));
 
     }
 
-    //test6: orderWeapon
+    // test7 : fruitSeller
+    public int fruitSeller(int k, int m, int[] score) {
+        int answer = 0;
+        int boxCnt = score.length / m; // 2
+        int totalCnt = boxCnt * m; // 8
+        int idx = score.length - totalCnt; // 8-4 = 4
+
+        Arrays.sort(score); // 1,1,1,2,2,3,3
+        while (idx < totalCnt) { // 3 < 4
+            answer += score[idx] * m; // 0 = 0+score(3)
+            idx += m;
+        }
+
+        return answer;
+    }
+
+//    public int fruitSeller(int k, int m, int[] score) {
+//        int answer = 0;
+//        int apple = score.length;
+//        int checkedAppleCount = apple;
+//        int box = apple / m;
+//        if (box == 0) {
+//            return 0;
+//        }
+//        // 오름차순
+//        Arrays.sort(score); //1,1,1,2,2,3,3
+//        // 내림차순
+////        List<Integer> arrayList = Arrays.stream(score).boxed().collect(Collectors.toList());
+////        Collections.sort(arrayList, Collections.reverseOrder());
+//        // 3,3,2,2,1,1,1
+//        for (int i = 0; i < box; i++) {
+//            int[] profitArr = getScore(m, score, checkedAppleCount);
+//            System.out.println("profitArr : " + Arrays.toString(profitArr));
+//            int profit = profitArr[m - 1]; //2
+//            answer += profit * m;
+//        }
+//        return answer;
+//    }
+//
+//    public int[] getScore(int m, int[] arrayList, int checkedAppleCount) {
+//        int[] profitArr = new int[m];
+//        System.out.println("arrayList : " + Arrays.toString(arrayList));
+//        for (int i = 0; i < m; i++) {
+//            profitArr[i] = arrayList[checkedAppleCount - 1];
+//            System.out.println("profitArr[" + i + "]" + " : " + profitArr[i]);
+//            checkedAppleCount--;
+//        }
+//        return profitArr;
+//    }
+
+    // test6: orderWeapon
     public int orderWeapon(int number, int limit, int power) {
         int answer = 0;
 
