@@ -13,6 +13,25 @@ public class TestCode {
         System.out.println("#test3 ::: oddOccurrencesInArray : "
                 + oddOccurrencesInArray(new int[]{9, 3, 9, 3, 9, 7, 9}));
         System.out.println("#test4 ::: frogJump : " + frogJump(10, 85, 30));
+        System.out.println("#test5 ::: permMissingElem : " + permMissingElem(new int[]{2, 3, 1, 5}));
+    }
+
+
+    // test5: permMissingElem
+    public int permMissingElem(int[] A) {
+        Arrays.sort(A);
+        System.out.println("정렬 : " + Arrays.toString(A)); // 정렬되었는지 확인
+
+        int missingElem = 0;
+
+        for (int i = A.length - 1; i > 0; i--) {
+            if (A[i] - 1 != A[i - 1]) {
+                missingElem = A[i] - 1;
+                System.out.println("A[i] - 1 : " + (A[i] - 1));
+            }
+        }
+
+        return missingElem;
     }
 
     // test4: frogJump
