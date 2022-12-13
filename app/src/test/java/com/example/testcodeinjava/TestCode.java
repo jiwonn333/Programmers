@@ -20,8 +20,43 @@ public class TestCode {
         System.out.println("#test7 ::: 과일장수 : " + fruitSeller(3, 4, new int[]{1, 2, 3, 1, 2, 3, 1, 1}));
         System.out.println("#test8 ::: 모의고사 : " + Arrays.toString(exam(new int[]{1, 2, 3, 4, 5, 4, 3, 2, 1})));
         System.out.println("#test9 ::: 소수 찾기 : " + findPrimeNumber("17"));
-
+        System.out.println("#test10 ::: 다음에 올 숫자 : " + nextNumber(new int[]{1, 2, 3, 4}) + ", " + nextNumber(new int[]{2, 4, 8}));
     }
+
+    // test10. 다음에 올 숫자
+    public int nextNumber(int[] common) {
+        int answer = 0;
+        int length = common.length;
+
+        if ((common[1] - common[0]) == (common[2] - common[1])) {
+            answer = common[length - 1] + (common[1] - common[0]);
+        } else {
+            answer = common[length - 1] * (common[1] / common[0]);
+        }
+        return answer;
+    }
+
+    // 8번 틀림
+    public int nextNumber1(int[] common) {
+        int length = common.length;
+        int seq = 0;
+
+        int a = Math.abs(common[length - 1]);
+        int b = Math.abs(common[length - 2]);
+        int c = Math.abs(common[length - 3]);
+        if (Math.abs(a - b) == Math.abs(b - c)) {
+            seq = Math.abs(a - b);
+            return common[length - 1] + seq;
+        } else {
+            seq = Math.abs(a / b);
+            if (common[length - 1] < 0) {
+                return common[length - 1] / seq;
+            } else {
+                return common[length - 1] * seq;
+            }
+        }
+    }
+
 
     // test9 소수 찾기
     public int findPrimeNumber(String numbers) {
@@ -46,6 +81,7 @@ public class TestCode {
         }
         return count;
     }
+
     public boolean isPrime(int ele) {
         // 소수가 맞는지 확인
         if (ele == 0 || ele == 1) {
@@ -169,6 +205,7 @@ public class TestCode {
         }
         return answer;
     }
+
     private int getCount(int number) {
         int count = 0;
         for (int i = 1; i * i <= number; i++) {
