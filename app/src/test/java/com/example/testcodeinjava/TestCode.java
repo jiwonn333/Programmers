@@ -21,6 +21,40 @@ public class TestCode {
         System.out.println("#test8 ::: 모의고사 : " + Arrays.toString(exam(new int[]{1, 2, 3, 4, 5, 4, 3, 2, 1})));
         System.out.println("#test9 ::: 소수 찾기 : " + findPrimeNumber("17"));
         System.out.println("#test10 ::: 다음에 올 숫자 : " + nextNumber(new int[]{1, 2, 3, 4}) + ", " + nextNumber(new int[]{2, 4, 8}));
+        System.out.println("#test11 ::: 분수의 덧셈 : " + Arrays.toString(additionOfFractions(1,2,3,4)));
+
+    }
+
+    // test11
+    public int[] additionOfFractions(int denum1, int num1, int denum2, int num2) {
+        int answer[] = new int[2];
+        int denum = 0; // 분자
+        int num = 0; // 분모
+
+        num = num1*num2;
+        denum = denum1 * num2 + denum2 * num1;
+        answer[0] = num;
+        answer[1] = denum;
+        int gcd = gcd(denum, num);
+        answer[0] = denum/gcd;
+        answer[1] = num/gcd;
+        return answer;
+    }
+
+    // gcd. 최대공약수
+    public int gcd(int a, int b) {
+        if (a < b) {
+            // 유클리드 호제법 조건
+            int temp = a;
+            a = b;
+            b = temp;
+        }
+        while (b != 0) {
+            int r = a % b;
+            a = b;
+            b = r;
+        }
+        return a;
     }
 
     // test10. 다음에 올 숫자
@@ -34,27 +68,6 @@ public class TestCode {
             answer = common[length - 1] * (common[1] / common[0]);
         }
         return answer;
-    }
-
-    // 8번 틀림
-    public int nextNumber1(int[] common) {
-        int length = common.length;
-        int seq = 0;
-
-        int a = Math.abs(common[length - 1]);
-        int b = Math.abs(common[length - 2]);
-        int c = Math.abs(common[length - 3]);
-        if (Math.abs(a - b) == Math.abs(b - c)) {
-            seq = Math.abs(a - b);
-            return common[length - 1] + seq;
-        } else {
-            seq = Math.abs(a / b);
-            if (common[length - 1] < 0) {
-                return common[length - 1] / seq;
-            } else {
-                return common[length - 1] * seq;
-            }
-        }
     }
 
 
