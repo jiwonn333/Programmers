@@ -5,13 +5,24 @@ import org.junit.Test;
 import java.util.Arrays;
 
 public class TestCode {
-
     @Test
     public void testCode() {
-        // test1
         System.out.println("test1 ::: binary_gap : " + binaryGap(8806));
         System.out.println("#test2 ::: cyclic_rotation : "
                 + Arrays.toString(cyclicRotation(new int[]{1, 2, 3, 4}, 2)));
+        System.out.println("#test3 ::: oddOccurrencesInArray : "
+                + oddOccurrencesInArray(new int[]{9, 3, 9, 3, 9, 7, 9}));
+    }
+
+
+    // test3: oddOccurrencesInArray
+    public int oddOccurrencesInArray(int[] A) {
+        // 비트연산활용
+        int single = 0;
+        for (int i = 0; i < A.length; i++) {
+            single = single ^ A[i];
+        }
+        return single;
     }
 
     // test2: cyclic_rotation
