@@ -4,9 +4,13 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class TestCode {
+
+
     @Test
     public void testCode() {
         System.out.println("#test1 ::: binary_gap : " + binaryGap(8806));
@@ -21,8 +25,31 @@ public class TestCode {
         System.out.println("#test8 ::: 모의고사 : " + Arrays.toString(exam(new int[]{1, 2, 3, 4, 5, 4, 3, 2, 1})));
         System.out.println("#test9 ::: 소수 찾기 : " + findPrimeNumber("17"));
         System.out.println("#test10 ::: 다음에 올 숫자 : " + nextNumber(new int[]{1, 2, 3, 4}) + ", " + nextNumber(new int[]{2, 4, 8}));
-        System.out.println("#test11 ::: 분수의 덧셈 : " + Arrays.toString(additionOfFractions(1,2,3,4)));
+        System.out.println("#test11 ::: 분수의 덧셈 : " + Arrays.toString(additionOfFractions(1, 2, 3, 4)));
+        System.out.println("#test12 ::: 겹치는 선분의 길이 : " + pathsOfOverlapping(new int[][]{{0, 1}, {2, 5}, {3, 9}}));
 
+    }
+
+    // test 12 . 겹치는 선분의 길이
+    public int pathsOfOverlapping(int[][] lines) {
+        // 1. arr 배열 및 변수 초기화
+        int answer = 0;
+        int[] arr = new int[200];
+
+        // 2. lines 정보를 arr 배열에 적용
+        // 조건에 음수값이 있으므로 +100
+        for (int i = 0; i < lines.length; i++) {
+            for (int j = lines[i][0] + 100; j < lines[i][1] + 100; j++) {
+                arr[j]++;
+            }
+        }
+        for (int i = 0; i < 200; i++) {
+            if (arr[i] > 1) {
+                answer++;
+            }
+        }
+
+        return answer;
     }
 
     // test11
@@ -31,13 +58,13 @@ public class TestCode {
         int denum = 0; // 분자
         int num = 0; // 분모
 
-        num = num1*num2;
+        num = num1 * num2;
         denum = denum1 * num2 + denum2 * num1;
         answer[0] = num;
         answer[1] = denum;
         int gcd = gcd(denum, num);
-        answer[0] = denum/gcd;
-        answer[1] = num/gcd;
+        answer[0] = denum / gcd;
+        answer[1] = num / gcd;
         return answer;
     }
 
