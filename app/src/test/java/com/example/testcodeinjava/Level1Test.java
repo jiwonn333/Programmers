@@ -17,9 +17,28 @@ public class Level1Test {
         System.out.println("test 1 : " + babblingTest(new String[]{"aya", "yee", "u", "maa", "wyeoo"}));
         System.out.println("test 2: " + Arrays.toString(getReportResults(new String[]{"muzi", "frodo", "apeach", "neo"}, new String[]{"muzi frodo", "muzi frodo", "apeach frodo", "frodo neo", "muzi neo", "apeach muzi"}, 2)));
         System.out.println("test 내적 : " + getDotProduct(new int[]{1, 2, 3, 4}, new int[]{-3, -1, 0, 2}));
+        System.out.println("test : 두 개 뽑아서 더하기 : " + Arrays.toString(pickTwoAdd(new int[]{2, 1, 3, 4, 1})));
     }
 
-    // 월간 코드 챌린지 시즌1 > 내적
+    // 월간 코드 챌린지 시즌1 > 두 개 뽑아서 더하기
+    public int[] pickTwoAdd(int[] numbers) {
+        HashSet<Integer> set = new HashSet<>();
+
+        for (int i = 0; i < numbers.length - 1; i++) {
+            for (int j = i + 1; j < numbers.length; j++) {
+                set.add(numbers[i] + numbers[j]);
+            }
+        }
+        List<Integer> list = new ArrayList<>(set);
+        Collections.sort(list);
+        int[] answer = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            answer[i] = list.get(i);
+        }
+
+        return answer;
+    }
+
     public int getDotProduct(int[] a, int[] b) {
         int answer = 0;
         // 각 인덱스 곱셈 값 출력
