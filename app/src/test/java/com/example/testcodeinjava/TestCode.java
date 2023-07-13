@@ -4,9 +4,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
+import java.util.Stack;
 
 public class TestCode {
 
@@ -27,8 +27,156 @@ public class TestCode {
         System.out.println("#test10 ::: 다음에 올 숫자 : " + nextNumber(new int[]{1, 2, 3, 4}) + ", " + nextNumber(new int[]{2, 4, 8}));
         System.out.println("#test11 ::: 분수의 덧셈 : " + Arrays.toString(additionOfFractions(1, 2, 3, 4)));
         System.out.println("#test12 ::: 겹치는 선분의 길이 : " + pathsOfOverlapping(new int[][]{{0, 1}, {2, 5}, {3, 9}}));
+        System.out.println("#test13 ::: 음양 더하기 : " + nepoPlus(new int[]{4, 7, 12}, new boolean[]{true, false, true}));
+        System.out.println("#test14 ::: 약수 더하기 : " + addDivisors(13, 17));
+        System.out.println("#test15 ::: 괄호 회전하기 : " + bracketRotation("[](){}"));
+        System.out.println("#test16 ::: 2개 이하로 다른 비트 : " + Arrays.toString(differentBits(new long[]{2, 7})));
+        System.out.println("#test17 ::: 전화번호 목록 :" + phoneNumberList(new String[]{"119", "97674223", "1195524421"}));
 
     }
+
+
+    public boolean phoneNumberList(String[] phone_book) {
+        boolean answer = true;
+
+        Arrays.sort(phone_book);
+
+        for (int i = 0; i < phone_book.length - 1; i++) {
+            if (phone_book[i + 1].startsWith(phone_book[i])) {
+                return false;
+            }
+        }
+
+        return answer;
+    }
+
+    public long[] differentBits(long[] numbers) {
+        long[] answer = new long[numbers.length];
+
+        System.out.println("numbers long형 : " + numbers[0]);
+
+        for (int i = 0; i < numbers.length; i++) {
+            // 짝수
+            if (numbers[i] % 2 == 0) {
+                answer[i] = numbers[i] + 1;
+            } else {
+                // 홀수
+                // 달라진 비트의 수 확인
+                Integer.toBinaryString((int) numbers[i] + 1);
+                answer[i] = Long.parseLong(Integer.toBinaryString(Integer.parseInt(numbers[i] + Integer.toBinaryString(1))));
+            }
+        }
+        return answer;
+    }
+
+    public int bracketRotation(String s) {
+        int answer = 0;
+
+        // 회전 : 리스트 사용
+        List<String> list = new ArrayList<>();
+        String[] str = s.split("");
+
+        for (int i = 0; i < s.length(); i++) {
+            list.add(str[i]);
+        }
+
+
+        // 올바른 괄호 문자열 확인 : 스택 사용
+        Stack<String> stack = new Stack<>();
+        int length = list.size();
+
+
+        // 길이만큼 회전
+        while (length > 0) {
+            // stack 초기화
+            int top = -1; // 삽입 인덱스
+            stack.removeAllElements();
+
+            for (String ch : list) {
+                // 1. 열려 있는 괄호일 경우 스택에 삽입
+                if (ch.equals("(") || ch.equals("{") || ch.equals("[")) {
+                    top++;
+                    stack.add(ch);
+                } else if ((top != -1) && (ch.equals(")") || ch.equals("}") || ch.equals("]"))) {
+                    if (isChecked(ch, stack, top)) {
+                        stack.remove(top);
+                        top--;
+                    } else {
+                        break;
+                    }
+                } else {
+                    stack.add(0, ch);
+                }
+            }
+            // 3. 다 돌고 난 후 stack에 데이터가 남아있는 경우 false;
+            if (stack.size() == 0) {
+                answer++;
+
+            }
+            length--;
+
+            // 괄호 회전
+            list.add(list.get(0));
+            list.remove(list.get(0));
+
+        }
+
+        return answer;
+    }
+
+    public boolean isChecked(String ch, Stack<String> stack, int top) {
+        switch (ch) {
+            case ")":
+                if (stack.get(top).equals("(")) {
+                    return true;
+                }
+                break;
+            case "}":
+                if (stack.get(top).equals("{")) {
+                    return true;
+                }
+                break;
+
+            case "]":
+                if (stack.get(top).equals("[")) {
+                    return true;
+                }
+                break;
+        }
+        return false;
+    }
+
+    // Refactor
+    public int addDivisors(int left, int right) {
+        int answer = 0;
+
+        for (int i = left; i <= right; i++) {
+            // 제곱 수인 경우 약수개 홀수
+            if (i % Math.sqrt(i) == 0) {
+                answer -= i;
+            } else {
+                answer += i;
+            }
+        }
+
+        return answer;
+    }
+
+    public int nepoPlus(int[] absolutes, boolean[] signs) {
+        int answer = 0;
+        for (int i = 0; i < absolutes.length; i++) {
+            if (signs[i]) {
+                answer += absolutes[i];
+            } else {
+                answer -= absolutes[i];
+            }
+        }
+        return answer;
+    }
+
+//    진법 변환
+//    int n = 10;
+//    Integer.toUnsignedString(n, 3);
 
     // test 12 . 겹치는 선분의 길이
     public int pathsOfOverlapping(int[][] lines) {
