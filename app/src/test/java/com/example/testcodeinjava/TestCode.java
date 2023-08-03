@@ -32,7 +32,55 @@ public class TestCode {
         System.out.println("#test15 ::: 괄호 회전하기 : " + bracketRotation("[](){}"));
         System.out.println("#test16 ::: 2개 이하로 다른 비트 : " + Arrays.toString(differentBits(new long[]{2, 7})));
         System.out.println("#test17 ::: 전화번호 목록 :" + phoneNumberList(new String[]{"119", "97674223", "1195524421"}));
+        System.out.println("#test18 ::: 숫자 문자열과 영단어 :" + NumberAndEnglishWords("one4seveneight"));
+        System.out.println("#test19 ::: 피로도 :" + fatigue(80, new int[][]{{80, 20}, {50, 40}, {30, 10}}));
 
+    }
+
+    public int fatigueAnswer = 0;
+    public boolean[] fatigueVisit;
+
+    public int fatigue(int k, int[][] dungeons) {
+        fatigueVisit = new boolean[dungeons.length];
+
+        fatigueDfs(0, k, dungeons);
+        return fatigueAnswer;
+    }
+
+    public void fatigueDfs(int depth, int k, int[][] dungeons) {
+        for (int i = 0; i < dungeons.length; i++) {
+            System.out.println("depth : " + depth);
+            if (!fatigueVisit[i] && dungeons[i][0] <= k) {
+                fatigueVisit[i] = true;
+                System.out.println("1. i : " + i);
+                System.out.println("1. visit" + Arrays.toString(fatigueVisit));
+
+
+                fatigueDfs(depth + 1, k - dungeons[i][1], dungeons);
+                fatigueVisit[i] = false;
+                System.out.println("2. i : " + i);
+                System.out.println("2. visit" + Arrays.toString(fatigueVisit));
+
+            }
+            System.out.println("3. i : " + i);
+            System.out.println("3. visit" + Arrays.toString(fatigueVisit));
+        }
+        fatigueAnswer = Math.max(fatigueAnswer, depth);
+        System.out.println("answer : " + fatigueAnswer + " / depth : " + depth);
+
+    }
+
+    private int NumberAndEnglishWords(String s) {
+        int answer = 0;
+        String[] num = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println("num[" + i + "] : " + num[i]);
+            s = s.replace(num[i], Integer.toString(i));
+            System.out.println("s : " + s);
+        }
+        answer = Integer.parseInt(s);
+        return answer;
     }
 
 
