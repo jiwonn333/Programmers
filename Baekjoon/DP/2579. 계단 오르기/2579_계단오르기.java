@@ -14,9 +14,11 @@ public class Main {
         }
 
         int[] score = new int[N + 1];
-        // 기저조건 재생성
+        // 기저 조건 if문 설정
         score[1] = stairs[1];
-        score[2] = stairs[1] + stairs[2];
+        if (N > 1) {
+            score[2] = stairs[1] + stairs[2];
+        }
         for (int i = 3; i <= N; i++) {
             score[i] = Math.max(score[i - 2], score[i - 3] + stairs[i - 1]) + stairs[i];
         }
