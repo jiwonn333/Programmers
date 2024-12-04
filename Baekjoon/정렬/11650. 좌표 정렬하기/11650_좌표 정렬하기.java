@@ -28,11 +28,10 @@ public class Main {
             return o1[0] - o2[0];
         });
 
-        for (int x = 0; x < n; x++) {
-            for (int y = 0; y < 2; y++) {
-                System.out.print(plane[x][y] + " ");
-            }
-            System.out.println();
+        StringBuilder sb = new StringBuilder();
+        for (int[] plane : planes) {
+            sb.append(plane[0]).append(" ").append(plane[1]).append("\n");
         }
+        System.out.print(sb);
     }
 }
