@@ -6,42 +6,43 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int n; // 컴퓨터의 수
-    static int pair; // 연결된 컴퓨터 쌍의 수
-    static List<List<Integer>> tree; // 트리 선언
-    static boolean[] visited; // 방문 체크 배열
-    static int count = 0;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        n = Integer.parseInt(br.readLine()); // 컴퓨터의 수 7
-        pair = Integer.parseInt(br.readLine()); // 연결된 쌍 6
+        int n = Integer.parseInt(br.readLine()); // 컴퓨터의 수 7
+        int pair = Integer.parseInt(br.readLine()); // 연결된 쌍 6
 
-        tree = new ArrayList<>();
+        List<List<Integer>> graph = new ArrayList<>();
         for (int i = 0; i <= n; i++) {
-            tree.add(new ArrayList<>());
+            graph.add(new ArrayList<>());
         }
 
         for (int i = 0; i < pair; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int left = Integer.parseInt(st.nextToken());
             int right = Integer.parseInt(st.nextToken());
-            tree.get(left).add(right);
-            tree.get(right).add(left);
+            graph.get(left).add(right);
+            graph.get(right).add(left);
         }
 
-        visited = new boolean[n + 1];
+        boolean[] visited = new boolean[n + 1];
         visited[1] = true;
-        dfs(1);
+
+        // DFS 실행 및 결과 출력
+        int count = dfs(graph, visited, 1);
         System.out.println(count);
     }
 
-    static void dfs(int node) {
-        for (int nodes : tree.get(node))
-            if (!visited[nodes]) {
-                visited[nodes] = true;
-                count++;
-                dfs(nodes);
+    static int dfs(List<List<Integer>> graph, boolean[] visited, int node) {
+        int count = 0;
+
+        for (int nextNode : graph.get(node)) {
+            if (!visited[nextNode]) {
+                visited[nextNode] = true;
+                count += 1 + dfs(graph, visited, nextNode);
             }
+        }
+
+        return count;
     }
 }
